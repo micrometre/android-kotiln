@@ -1,4 +1,6 @@
 package com.example.composetutorial
+
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -22,8 +26,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import android.content.res.Configuration
-
 import com.example.composetutorial.ui.theme.ComposeTutorialTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,6 +33,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTutorialTheme {
+
                 Surface(modifier = Modifier.fillMaxSize()) {
                     MessageCard(Message("Android", "Jetpack Compose"))
                 }
@@ -92,5 +95,22 @@ fun PreviewMessageCard() {
                 msg = Message("Lexi", "Jetpack Compose")
             )
         }
+    }
+}
+@Composable
+fun Conversation(messages: List<Message>) {
+    LazyColumn {
+        items(messages) { message ->
+            MessageCard(message)
+        }
+    }
+}
+
+
+@Preview
+@Composable
+fun PreviewConversation() {
+    ComposeTutorialTheme {
+        Conversation(SampleData.conversationSample)
     }
 }
